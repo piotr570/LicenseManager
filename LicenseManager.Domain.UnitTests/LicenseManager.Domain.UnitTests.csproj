@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>LicenseManager.UnitTests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentAssertions" Version="8.2.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+      <PackageReference Include="Moq" Version="4.20.72" />
+      <PackageReference Include="xunit" Version="2.9.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\LicenseManager.Application\LicenseManager.Application.csproj" />
+      <ProjectReference Include="..\LicenseManager.Domain\LicenseManager.Domain.csproj" />
+      <ProjectReference Include="..\LicenseManager.Tests.Utils\LicenseManager.Tests.Utils.csproj" />
+    </ItemGroup>
+
+</Project>

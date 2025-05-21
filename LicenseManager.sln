@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.API", "LicenseManager.API\LicenseManager.API.csproj", "{798FE7D1-8587-4F4B-BF2F-2EF95A56AE79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C3F85A3-4DB5-4303-A9B3-8D9357C63D2D}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+		README.md = README.md
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Domain", "LicenseManager.Domain\LicenseManager.Domain.csproj", "{C2112210-1925-4ADE-AF28-5416E2088A66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Application", "LicenseManager.Application\LicenseManager.Application.csproj", "{3E786C57-A912-474C-92E5-0878358190EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Infrastructure", "LicenseManager.Infrastructure\LicenseManager.Infrastructure.csproj", "{77F4092A-8E8C-45C0-A343-0A55E2B40D55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0D5F12DE-3E22-4C79-B1AD-7115399C5321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Domain.UnitTests", "LicenseManager.Domain.UnitTests\LicenseManager.Domain.UnitTests.csproj", "{50783567-95DC-4D70-95C4-2C4E86D1451D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Domain.IntegrationTests", "LicenseManager.Domain.IntegrationTests\LicenseManager.Domain.IntegrationTests.csproj", "{79EC43E5-0753-40DA-A5D0-7F060E41CA8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Tests.Application", "LicenseManager.Tests.Application\LicenseManager.Tests.Application.csproj", "{9C5D4392-C6DB-4964-B562-E7ACC4815938}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Tests.Utils", "LicenseManager.Tests.Utils\LicenseManager.Tests.Utils.csproj", "{130DAE53-63BF-4388-B8D5-D5AE23044D67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.ArchitectureTests", "LicenseManager.ArchitectureTests\LicenseManager.ArchitectureTests.csproj", "{845D0079-2C23-4A42-A4E5-585982772CE7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{798FE7D1-8587-4F4B-BF2F-2EF95A56AE79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{798FE7D1-8587-4F4B-BF2F-2EF95A56AE79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{798FE7D1-8587-4F4B-BF2F-2EF95A56AE79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{798FE7D1-8587-4F4B-BF2F-2EF95A56AE79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2112210-1925-4ADE-AF28-5416E2088A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2112210-1925-4ADE-AF28-5416E2088A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2112210-1925-4ADE-AF28-5416E2088A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2112210-1925-4ADE-AF28-5416E2088A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E786C57-A912-474C-92E5-0878358190EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E786C57-A912-474C-92E5-0878358190EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E786C57-A912-474C-92E5-0878358190EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E786C57-A912-474C-92E5-0878358190EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77F4092A-8E8C-45C0-A343-0A55E2B40D55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F4092A-8E8C-45C0-A343-0A55E2B40D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F4092A-8E8C-45C0-A343-0A55E2B40D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F4092A-8E8C-45C0-A343-0A55E2B40D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50783567-95DC-4D70-95C4-2C4E86D1451D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50783567-95DC-4D70-95C4-2C4E86D1451D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50783567-95DC-4D70-95C4-2C4E86D1451D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50783567-95DC-4D70-95C4-2C4E86D1451D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79EC43E5-0753-40DA-A5D0-7F060E41CA8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79EC43E5-0753-40DA-A5D0-7F060E41CA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79EC43E5-0753-40DA-A5D0-7F060E41CA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79EC43E5-0753-40DA-A5D0-7F060E41CA8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5D4392-C6DB-4964-B562-E7ACC4815938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5D4392-C6DB-4964-B562-E7ACC4815938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5D4392-C6DB-4964-B562-E7ACC4815938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5D4392-C6DB-4964-B562-E7ACC4815938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130DAE53-63BF-4388-B8D5-D5AE23044D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130DAE53-63BF-4388-B8D5-D5AE23044D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130DAE53-63BF-4388-B8D5-D5AE23044D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130DAE53-63BF-4388-B8D5-D5AE23044D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{845D0079-2C23-4A42-A4E5-585982772CE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{845D0079-2C23-4A42-A4E5-585982772CE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{845D0079-2C23-4A42-A4E5-585982772CE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{845D0079-2C23-4A42-A4E5-585982772CE7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{50783567-95DC-4D70-95C4-2C4E86D1451D} = {0D5F12DE-3E22-4C79-B1AD-7115399C5321}
+		{79EC43E5-0753-40DA-A5D0-7F060E41CA8E} = {0D5F12DE-3E22-4C79-B1AD-7115399C5321}
+		{9C5D4392-C6DB-4964-B562-E7ACC4815938} = {0D5F12DE-3E22-4C79-B1AD-7115399C5321}
+		{130DAE53-63BF-4388-B8D5-D5AE23044D67} = {0D5F12DE-3E22-4C79-B1AD-7115399C5321}
+		{845D0079-2C23-4A42-A4E5-585982772CE7} = {0D5F12DE-3E22-4C79-B1AD-7115399C5321}
+	EndGlobalSection
+EndGlobal
