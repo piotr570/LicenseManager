@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureLogging(builder);
 
-builder.Services.AddControllers().AddApplicationPart(typeof(LicenseManager.Notification.API.NotificationController).Assembly);
+var mvcBuilder = builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -20,7 +20,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 
 // Module registrations
-builder.Services.AddNotificationModule();
+builder.Services.AddNotificationModule(mvcBuilder);
 
 builder.Services.AddCors(options =>
 {
