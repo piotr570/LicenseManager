@@ -3,6 +3,7 @@ using LicenseManager.Application.Middlewares;
 using LicenseManager.Domain;
 using LicenseManager.Infrastructure;
 using LicenseManager.Modules;
+using LicenseManager.Notification.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -10,13 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureLogging(builder);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddApplicationPart(typeof(LicenseManager.Notification.API.NotificationController).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDomainLayer();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
+
+// Module registrations
+builder.Services.AddNotificationModule();
 
 builder.Services.AddCors(options =>
 {

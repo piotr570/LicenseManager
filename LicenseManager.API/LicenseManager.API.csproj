@@ -38,6 +38,7 @@
     <ItemGroup>
       <ProjectReference Include="..\LicenseManager.Application\LicenseManager.Application.csproj" />
       <ProjectReference Include="..\LicenseManager.Infrastructure\LicenseManager.Infrastructure.csproj" />
+      <ProjectReference Include="..\LicenseManager.Notification\LicenseManager.Notification.csproj" />
     </ItemGroup>
 
 </Project>
