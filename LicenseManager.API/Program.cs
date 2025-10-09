@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureLogging(builder);
 
-var mvcBuilder = builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -19,7 +18,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 
 // Module registrations
-builder.Services.AddNotificationModule(mvcBuilder);
+builder.Services.AddNotificationModule();
 
 builder.Services.AddCors(options =>
 {
@@ -49,6 +48,7 @@ app.AddUserModule();
 
 app.UseAuthorization();
 app.MapControllers();
+app.MapNotificationModuleEndpoints();
 
 app.Run();
 
