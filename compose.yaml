@@ -31,6 +31,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341  
       - DatabaseConfiguration__ConnectionString=Server=licensemanager_db;Port=5432;Database=master;User Id=admin;Password=Admin123!;
+      - DB_HOST=licensemanager_db
+      - DB_PORT=5432
+      - DB_USER=admin
+      - DB_NAME=master
     depends_on:
       - seq
       - licensemanagerdb

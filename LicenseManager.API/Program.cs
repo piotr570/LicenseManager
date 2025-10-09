@@ -4,7 +4,6 @@ using LicenseManager.Domain;
 using LicenseManager.Infrastructure;
 using LicenseManager.Modules;
 using LicenseManager.Notification.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,8 +35,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-ApplyMigrations(app.Services);
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -62,23 +59,6 @@ void ConfigureLogging(WebApplicationBuilder webApplicationBuilder)
         .Enrich.FromLogContext()
         .CreateLogger();
     webApplicationBuilder.Host.UseSerilog();
-}
-
-void ApplyMigrations(IServiceProvider services)
-{
-    using var scope = services.CreateScope();
-    var serviceProvider = scope.ServiceProvider;
-
-    try
-    {
-        var dbContext = serviceProvider.GetRequiredService<LicenseManagerDbContext>();
-        dbContext.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        Log.Fatal(ex, "An error occurred while applying migrations");
-        throw;
-    }
 }
 
 public partial class Program { }
