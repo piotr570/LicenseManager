@@ -1,4 +1,4 @@
-using LicenseManager.Domain.Common.Events;
+using LicenseManager.SharedKernel.Events;
 
 namespace LicenseManager.Domain.Licenses.Events;
 

@@ -1,5 +1,5 @@
-using LicenseManager.Domain.Common.Events;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Events;
 
 namespace LicenseManager.Domain.Licenses.Events;
 

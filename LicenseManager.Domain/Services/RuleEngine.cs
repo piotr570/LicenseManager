@@ -1,8 +1,8 @@
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common.Exceptions;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.BusinessRule;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Exceptions;
 
 namespace LicenseManager.Domain.Services;
 

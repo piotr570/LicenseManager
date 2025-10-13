@@ -1,8 +1,8 @@
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common.BusinessRules;
-using LicenseManager.Domain.Common.Exceptions;
 using LicenseManager.Domain.Licenses.Enums;
 using LicenseManager.Domain.Licenses.Factories.Creation.BusinessRules;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.BusinessRules;
+using LicenseManager.SharedKernel.Exceptions;
 
 namespace LicenseManager.Domain.Licenses.Factories.Creation;
 

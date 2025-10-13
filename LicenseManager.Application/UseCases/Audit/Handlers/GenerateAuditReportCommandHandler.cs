@@ -2,10 +2,10 @@ using LicenseManager.Application.UseCases.Audit.Commands;
 using LicenseManager.Application.UseCases.Audit.Models;
 using LicenseManager.Application.UseCases.Licenses.Models;
 using LicenseManager.Application.UseCases.Users.Models;
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
+using LicenseManager.SharedKernel.Abstractions;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Common;
 using MediatR;
 
 namespace LicenseManager.Application.UseCases.Audit.Handlers;

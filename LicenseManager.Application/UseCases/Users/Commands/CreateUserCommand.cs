@@ -1,4 +1,3 @@
-using LicenseManager.Domain.Common;
 using LicenseManager.Domain.Users;
 using MediatR;
 

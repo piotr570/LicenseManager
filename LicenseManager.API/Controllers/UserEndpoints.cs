@@ -4,11 +4,11 @@ using LicenseManager.Application.UseCases.Users.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LicenseManager.Modules;
+namespace LicenseManager.Controllers;
 
-public static class UserModule
+public static class UserEndpoints
 {
-    public static void AddUserModule(this IEndpointRouteBuilder app)
+    public static void MapUserEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/users");
 

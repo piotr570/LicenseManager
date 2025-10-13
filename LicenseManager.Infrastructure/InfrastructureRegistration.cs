@@ -1,11 +1,11 @@
 using LicenseManager.Application.Abstraction;
 using LicenseManager.Application.HostedServices;
 using LicenseManager.Application.HostedServices.Interfaces;
-using LicenseManager.Domain.Abstractions;
 using LicenseManager.Infrastructure.BackgroundServices;
 using LicenseManager.Infrastructure.Configuration;
 using LicenseManager.Infrastructure.Persistence;
 using LicenseManager.Infrastructure.Services;
+using LicenseManager.SharedKernel.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +33,7 @@ public static class InfrastructureServiceCollectionExtensions
         });
             
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-        services.AddScoped<IUnitOfWork, UnitOfWork<LicenseManagerDbContext>>();
+        services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<LicenseManagerDbContext>));
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); 
         services.AddScoped<ILicenseReservationCleanupService, LicenseReservationCleanupService>();
         services.AddScoped<ILicenseAssignmentCleanupService, LicenseAssignmentCleanupService>();

@@ -1,6 +1,6 @@
-using LicenseManager.Domain.Abstractions;
+using LicenseManager.SharedKernel.Abstractions;
 
-namespace LicenseManager.Domain.Common.Exceptions;
+namespace LicenseManager.SharedKernel.Exceptions;
 
 public class BusinessRuleViolationException(IBusinessRule brokenRule) : Exception(brokenRule.Message)
 {

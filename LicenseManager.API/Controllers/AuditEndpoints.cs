@@ -3,9 +3,9 @@ using LicenseManager.Application.UseCases.Audit.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LicenseManager.Modules;
+namespace LicenseManager.Controllers;
 
-public static class AuditModule
+public static class AuditEndpoints
 {
     public static WebApplication AddAuditModule(this WebApplication app)
     {

@@ -1,5 +1,5 @@
 using LicenseManager.Application.Abstraction;
-using LicenseManager.Domain.Abstractions;
+using LicenseManager.SharedKernel.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace LicenseManager.Infrastructure.Persistence;

@@ -17,4 +17,8 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\LicenseManager.SharedKernel\LicenseManager.SharedKernel.csproj" />
+    </ItemGroup>
+
 </Project>

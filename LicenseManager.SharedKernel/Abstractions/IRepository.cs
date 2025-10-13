@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
-using LicenseManager.Domain.Common;
 
-namespace LicenseManager.Domain.Abstractions;
+namespace LicenseManager.SharedKernel.Abstractions;
 
 public interface IRepository<TEntity>
 {
@@ -14,3 +13,4 @@ public interface IRepository<TEntity>
     void Update(TEntity entity);
     void Delete(TEntity entity);
 }
+

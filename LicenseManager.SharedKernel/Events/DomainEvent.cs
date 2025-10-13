@@ -1,6 +1,6 @@
-using LicenseManager.Domain.Abstractions;
+using LicenseManager.SharedKernel.Common;
 
-namespace LicenseManager.Domain.Common.Events;
+namespace LicenseManager.SharedKernel.Events;
 
 public abstract class DomainEvent : IDomainEvent
 {

@@ -1,6 +1,6 @@
 using LicenseManager.Application.Common.Exceptions;
 using LicenseManager.Application.UseCases.Licenses.Commands;
-using LicenseManager.Domain.Abstractions;
+using LicenseManager.SharedKernel.Abstractions;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Abstractions;
 using MediatR;

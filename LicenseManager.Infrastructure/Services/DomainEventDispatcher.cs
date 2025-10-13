@@ -1,5 +1,5 @@
 using LicenseManager.Application.Abstraction;
-using LicenseManager.Domain.Abstractions;
+using LicenseManager.SharedKernel.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LicenseManager.Infrastructure.Services;

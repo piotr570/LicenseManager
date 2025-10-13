@@ -1,9 +1,8 @@
-using LicenseManager.Domain.Abstractions;
 using LicenseManager.Domain.Licenses.Abstractions;
 using LicenseManager.Domain.Licenses.BusinessRule;
 using LicenseManager.Domain.Licenses.Enums;
-using LicenseManager.Domain.Services;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Abstractions;
 
 namespace LicenseManager.Domain.Licenses.Services;
 

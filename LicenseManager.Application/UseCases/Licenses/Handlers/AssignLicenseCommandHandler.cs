@@ -1,13 +1,11 @@
 using LicenseManager.Application.Common.Exceptions;
 using LicenseManager.Application.UseCases.Licenses.Commands;
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Abstractions;
 using LicenseManager.Domain.Licenses.Factories.Assignment;
-using LicenseManager.Domain.Licenses.Services;
-using LicenseManager.Domain.Services;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

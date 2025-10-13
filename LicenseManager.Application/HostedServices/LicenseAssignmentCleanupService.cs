@@ -1,9 +1,9 @@
 using LicenseManager.Application.HostedServices.Interfaces;
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Abstractions;
 using LicenseManager.Domain.Licenses.Services;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
 using Microsoft.Extensions.Logging;
 
 namespace LicenseManager.Application.HostedServices;

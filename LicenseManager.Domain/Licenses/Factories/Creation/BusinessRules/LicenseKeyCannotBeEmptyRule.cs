@@ -1,4 +1,4 @@
-using LicenseManager.Domain.Abstractions;
+using LicenseManager.SharedKernel.Abstractions;
 
 namespace LicenseManager.Domain.Licenses.Factories.Creation.BusinessRules;
 

@@ -1,8 +1,8 @@
 using LicenseManager.Application;
 using LicenseManager.Application.Middlewares;
+using LicenseManager.Controllers;
 using LicenseManager.Domain;
 using LicenseManager.Infrastructure;
-using LicenseManager.Modules;
 using LicenseManager.Notification.Infrastructure;
 using Serilog;
 
@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureLogging(builder);
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -43,11 +44,9 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandling();
 app.UseRequestLogging();
 
-app.AddLicenseModule();
-app.AddUserModule();
-
-app.UseAuthorization();
 app.MapControllers();
+app.MapLicenseEndpoints();
+app.MapUserEndpoints();
 app.MapNotificationModuleEndpoints();
 
 app.Run();

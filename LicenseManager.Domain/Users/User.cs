@@ -1,7 +1,6 @@
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
-using LicenseManager.Domain.Common.BusinessRules;
+using LicenseManager.SharedKernel.BusinessRules;
 using LicenseManager.Domain.Licenses;
+using LicenseManager.SharedKernel.Abstractions;
 using Assignment = LicenseManager.Domain.Assignments.Assignment;
 
 namespace LicenseManager.Domain.Users;

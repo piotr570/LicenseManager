@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Architecture
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.Notification", "LicenseManager.Notification\LicenseManager.Notification.csproj", "{B5A274FE-B052-4CFE-ABE5-93EE940BA1A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseManager.SharedKernel", "LicenseManager.SharedKernel\LicenseManager.SharedKernel.csproj", "{9D8AF0A4-4064-4503-BA80-E9572186C9EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,18 @@ Global
 		{B5A274FE-B052-4CFE-ABE5-93EE940BA1A4}.Release|x64.Build.0 = Release|Any CPU
 		{B5A274FE-B052-4CFE-ABE5-93EE940BA1A4}.Release|x86.ActiveCfg = Release|Any CPU
 		{B5A274FE-B052-4CFE-ABE5-93EE940BA1A4}.Release|x86.Build.0 = Release|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Debug|x64.Build.0 = Debug|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Debug|x86.Build.0 = Debug|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Release|x64.ActiveCfg = Release|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Release|x64.Build.0 = Release|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Release|x86.ActiveCfg = Release|Any CPU
+		{9D8AF0A4-4064-4503-BA80-E9572186C9EA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

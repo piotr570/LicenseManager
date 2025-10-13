@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\LicenseManager.Domain\LicenseManager.Domain.csproj" />
+      <ProjectReference Include="..\LicenseManager.SharedKernel\LicenseManager.SharedKernel.csproj" />
     </ItemGroup>
 
     <ItemGroup>

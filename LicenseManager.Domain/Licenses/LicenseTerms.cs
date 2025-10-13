@@ -1,6 +1,5 @@
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
 using LicenseManager.Domain.Licenses.Enums;
+using LicenseManager.SharedKernel.Abstractions;
 
 namespace LicenseManager.Domain.Licenses;
 

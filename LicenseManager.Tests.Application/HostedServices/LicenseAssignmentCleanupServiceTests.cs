@@ -1,13 +1,11 @@
 using System.Linq.Expressions;
-using LicenseManager.Application.Abstraction;
 using LicenseManager.Application.HostedServices;
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Abstractions;
-using LicenseManager.Domain.Licenses.Enums;
 using LicenseManager.Domain.Licenses.Policies;
 using LicenseManager.Domain.Licenses.Services;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
 using LicenseManager.Tests.Utils;
 using Microsoft.Extensions.Logging;
 using Moq;

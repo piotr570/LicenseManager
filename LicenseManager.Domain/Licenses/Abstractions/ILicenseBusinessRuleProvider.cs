@@ -1,5 +1,5 @@
-using LicenseManager.Domain.Abstractions;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Abstractions;
 
 namespace LicenseManager.Domain.Licenses.Abstractions;
 

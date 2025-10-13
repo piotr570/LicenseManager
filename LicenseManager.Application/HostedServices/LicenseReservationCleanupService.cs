@@ -1,6 +1,6 @@
 using LicenseManager.Application.HostedServices.Interfaces;
-using LicenseManager.Domain.Abstractions;
 using LicenseManager.Domain.Licenses;
+using LicenseManager.SharedKernel.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

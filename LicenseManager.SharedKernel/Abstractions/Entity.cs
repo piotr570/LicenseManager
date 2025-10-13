@@ -1,8 +1,9 @@
 using System.Collections.ObjectModel;
-using LicenseManager.Domain.Common;
-using LicenseManager.Domain.Common.Exceptions;
+using LicenseManager.SharedKernel.Common;
+using LicenseManager.SharedKernel.Exceptions;
+using LicenseManager.SharedKernel.Events;
 
-namespace LicenseManager.Domain.Abstractions;
+namespace LicenseManager.SharedKernel.Abstractions;
 
 public abstract class Entity : IEquatable<Entity>
 {

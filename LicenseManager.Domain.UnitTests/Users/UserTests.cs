@@ -1,7 +1,6 @@
 using FluentAssertions;
-using LicenseManager.Domain.Common;
-using LicenseManager.Domain.Common.Exceptions;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Exceptions;
 using Xunit;
 
 namespace LicenseManager.UnitTests.Users;

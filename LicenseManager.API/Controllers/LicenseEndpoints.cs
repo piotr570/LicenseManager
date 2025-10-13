@@ -4,11 +4,11 @@ using LicenseManager.Application.UseCases.Licenses.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LicenseManager.Modules;
+namespace LicenseManager.Controllers;
 
-public static class LicenseModule
+public static class LicenseEndpoints
 {
-    public static WebApplication AddLicenseModule(this WebApplication app)
+    public static WebApplication MapLicenseEndpoints(this WebApplication app)
     {
         var licenseGroup = app.MapGroup("/license");
 

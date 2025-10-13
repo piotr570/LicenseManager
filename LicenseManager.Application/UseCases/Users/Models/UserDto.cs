@@ -1,4 +1,3 @@
-using LicenseManager.Domain.Common;
 using LicenseManager.Domain.Users;
 
 namespace LicenseManager.Application.UseCases.Users.Models;

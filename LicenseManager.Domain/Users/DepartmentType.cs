@@ -1,4 +1,4 @@
-namespace LicenseManager.Domain.Common;
+namespace LicenseManager.Domain.Users;
 
 /// <summary>
 /// For the sake of simplicity

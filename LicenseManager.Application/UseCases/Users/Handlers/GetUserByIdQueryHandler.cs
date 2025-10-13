@@ -1,8 +1,8 @@
 using LicenseManager.Application.Common.Exceptions;
 using LicenseManager.Application.UseCases.Users.Models;
 using LicenseManager.Application.UseCases.Users.Queries;
-using LicenseManager.Domain.Abstractions;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

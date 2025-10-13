@@ -1,5 +1,4 @@
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common.Events;
+using LicenseManager.SharedKernel.Events;
 
 namespace LicenseManager.Application.Abstraction;
 

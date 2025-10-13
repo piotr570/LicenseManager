@@ -1,4 +1,3 @@
-using LicenseManager.Domain.Common.Exceptions;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Events;
 using LicenseManager.Domain.Licenses.Policies;
@@ -6,11 +5,12 @@ using LicenseManager.Domain.Users;
 using Moq;
 using Xunit;
 using FluentAssertions;
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
 using LicenseManager.Domain.Licenses.BusinessRule;
 using LicenseManager.Domain.Licenses.Enums;
 using LicenseManager.Domain.Licenses.Factories.Assignment;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
+using LicenseManager.SharedKernel.Exceptions;
 using LicenseManager.Tests.Utils;
 using License = LicenseManager.Domain.Licenses.License;
 

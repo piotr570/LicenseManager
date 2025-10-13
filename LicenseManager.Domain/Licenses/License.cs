@@ -1,14 +1,14 @@
-using LicenseManager.Domain.Abstractions;
 using LicenseManager.Domain.Assignments;
 using LicenseManager.Domain.Assignments.Events;
-using LicenseManager.Domain.Common;
-using LicenseManager.Domain.Common.Exceptions;
 using LicenseManager.Domain.Licenses.BusinessRule;
 using LicenseManager.Domain.Licenses.Policies;
 using LicenseManager.Domain.Licenses.Enums;
 using LicenseManager.Domain.Licenses.Events;
 using LicenseManager.Domain.Services;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
+using LicenseManager.SharedKernel.Exceptions;
 
 namespace LicenseManager.Domain.Licenses;
 

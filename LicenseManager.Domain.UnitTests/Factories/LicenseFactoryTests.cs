@@ -1,9 +1,9 @@
-using LicenseManager.Domain.Common;
-using LicenseManager.Domain.Common.BusinessRules;
-using LicenseManager.Domain.Common.Exceptions;
 using LicenseManager.Domain.Licenses.Enums;
 using LicenseManager.Domain.Licenses.Factories.Creation;
 using LicenseManager.Domain.Licenses.Factories.Creation.BusinessRules;
+using LicenseManager.SharedKernel.Exceptions;
+using LicenseManager.SharedKernel.BusinessRules;
+using LicenseManager.SharedKernel.Common;
 using LicenseManager.Tests.Utils;
 using Xunit;
 

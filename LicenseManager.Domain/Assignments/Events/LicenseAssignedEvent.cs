@@ -1,6 +1,6 @@
-using LicenseManager.Domain.Common.Events;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Events;
 
 namespace LicenseManager.Domain.Assignments.Events;
 

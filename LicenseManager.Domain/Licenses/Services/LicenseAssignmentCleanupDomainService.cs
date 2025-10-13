@@ -1,5 +1,3 @@
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Abstractions;
 
 namespace LicenseManager.Domain.Licenses.Services;

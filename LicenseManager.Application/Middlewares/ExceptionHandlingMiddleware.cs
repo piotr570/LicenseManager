@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using LicenseManager.Application.Common.Exceptions;
-using LicenseManager.Domain.Common.Exceptions;
+using LicenseManager.SharedKernel.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 

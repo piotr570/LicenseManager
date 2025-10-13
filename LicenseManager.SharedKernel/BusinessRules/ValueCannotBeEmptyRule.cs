@@ -1,10 +1,10 @@
-using LicenseManager.Domain.Abstractions;
+using LicenseManager.SharedKernel.Abstractions;
 
-namespace LicenseManager.Domain.Common.BusinessRules;
+namespace LicenseManager.SharedKernel.BusinessRules;
 
 public class ValueCannotBeEmptyRule(string fieldName, string value) : IBusinessRule
 {
     public bool IsBroken() => string.IsNullOrWhiteSpace(value);
-
     public string? Message => string.Format("{0} cannot be empty.", fieldName);
 }
+

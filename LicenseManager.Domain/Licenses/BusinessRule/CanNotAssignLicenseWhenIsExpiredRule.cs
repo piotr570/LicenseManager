@@ -1,5 +1,5 @@
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
 
 namespace LicenseManager.Domain.Licenses.BusinessRule;
 

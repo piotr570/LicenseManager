@@ -1,4 +1,4 @@
-namespace LicenseManager.Domain.Abstractions;
+namespace LicenseManager.SharedKernel.Events;
 
 public interface IDomainEvent
 {

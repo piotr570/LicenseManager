@@ -1,12 +1,11 @@
 ﻿using AutoFixture;
 using FluentAssertions;
-using LicenseManager.Domain.Abstractions;
-using LicenseManager.Domain.Common;
-using LicenseManager.Domain.Common.Exceptions;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Enums;
 using LicenseManager.Domain.Users;
-using Moq;
+using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
+using LicenseManager.SharedKernel.Exceptions;
 using Xunit;
 using License = LicenseManager.Domain.Licenses.License;
 

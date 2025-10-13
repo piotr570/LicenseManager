@@ -1,8 +1,8 @@
 using System.Reflection;
 using LicenseManager.Domain.Assignments;
-using LicenseManager.Domain.Common.Events;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Users;
+using LicenseManager.SharedKernel.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace LicenseManager.Infrastructure;
