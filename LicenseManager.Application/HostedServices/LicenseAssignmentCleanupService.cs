@@ -19,29 +19,29 @@ public class LicenseAssignmentCleanupService(
     {
         logger.LogInformation("Running Not Used License Assignments Cleanup Service");
 
-        var licenses = await repository
-            .GetAllIncludingAsync(x => x.Assignments.Count > 0);
-
-        foreach (var license in licenses)
-        {
-            cleanupDomainService.CleanupNotUsedAssignments(license, SystemClock.Now);
-
-            if (license.HasChanges)
-            {
-                logger.LogInformation("Cleaned up unused assignments for {0} license.", license.Id);
-                repository.Update(license);
-            }
-        }
-
-        var hasChanges = licenses.Any(license => license.HasChanges);
-
-        if (hasChanges)
-        {
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-        }
-        else
-        {
-            logger.LogInformation("No changes detected. Skipping database save operation.");
-        }
+        // var licenses = await repository
+        //     .GetAllIncludingAsync(x => x.Assignments.Count > 0);
+        //
+        // foreach (var license in licenses)
+        // {
+        //     cleanupDomainService.CleanupNotUsedAssignments(license, SystemClock.Now);
+        //
+        //     if (license.HasChanges)
+        //     {
+        //         logger.LogInformation("Cleaned up unused assignments for {0} license.", license.Id);
+        //         repository.Update(license);
+        //     }
+        // }
+        //
+        // var hasChanges = licenses.Any(license => license.HasChanges);
+        //
+        // if (hasChanges)
+        // {
+        //     await unitOfWork.SaveChangesAsync(cancellationToken);
+        // }
+        // else
+        // {
+        //     logger.LogInformation("No changes detected. Skipping database save operation.");
+        // }
     }
 }

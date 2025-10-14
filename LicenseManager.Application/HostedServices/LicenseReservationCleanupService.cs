@@ -14,23 +14,23 @@ public class LicenseReservationCleanupService(
 {
     public async Task CleanupExpiredReservationsAsync(CancellationToken cancellationToken)
     {
-        logger.LogInformation("Running License Reservation Cleanup Service...");
-        
-        var licensesWithReservations = await repository
-            .GetAllIncludingAsync(null,query => query.Include(l => l.Reservations));
-
-        foreach (var license in licensesWithReservations)
-        {
-            license.CleanupExpiredReservations();
-
-            if (license.DomainEvents.Any())
-            {
-                repository.Update(license);
-            }
-        }
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        logger.LogInformation("License Reservation Cleanup completed.");
+        // logger.LogInformation("Running License Reservation Cleanup Service...");
+        //
+        // var licensesWithReservations = await repository
+        //     .GetAllIncludingAsync(null,query => query.Include(l => l.Reservations));
+        //
+        // foreach (var license in licensesWithReservations)
+        // {
+        //     license.CleanupExpiredReservations();
+        //
+        //     if (license.DomainEvents.Any())
+        //     {
+        //         repository.Update(license);
+        //     }
+        // }
+        //
+        // await unitOfWork.SaveChangesAsync(cancellationToken);
+        //
+        // logger.LogInformation("License Reservation Cleanup completed.");
     }
 }

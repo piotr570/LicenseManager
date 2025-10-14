@@ -5,7 +5,7 @@ namespace LicenseManager.Application.UseCases.Licenses.Models;
 
 public record LicenseDto
 {
-    internal LicenseDto(License license, bool isExpiringSoon = false)
+    internal LicenseDto(License license, int assignmentsCount, bool isExpiringSoon = false)
     {
         Id = license.Id;
         Name = license.Name;
@@ -13,7 +13,7 @@ public record LicenseDto
         Vendor = license.Vendor;
         IsActive = license.IsActive;
         IsCancelled = license.IsCancelled;
-        AssignedUsersCount = license.Assignments.Count;
+        AssignmentsCount = assignmentsCount;
         IsExpiringSoon = isExpiringSoon;
         Terms = new LicenseTermsDto(license.Terms);
     }
@@ -24,7 +24,7 @@ public record LicenseDto
     public string Vendor { get; }
     public bool IsActive { get; }
     public bool IsCancelled { get; }
-    public int AssignedUsersCount { get; }
+    public int AssignmentsCount { get; }
     public bool IsExpiringSoon { get; }
     public LicenseTermsDto Terms { get; }
 

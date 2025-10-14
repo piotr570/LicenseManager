@@ -8,7 +8,7 @@ public class TeamLicenseAssignmentPolicy : ILicenseAssignmentPolicy
     public void CanAssignUser(License license, User user)
     {
         if (!((license.Department == null || user.Department == license.Department) 
-            && license.Assignments.Count < license.Terms.MaxUsers))
+            && license.AssignmentIds.Count < license.Terms.MaxUsers))
         {
             throw new PolicyViolationException($"Assignment policy denied for user {user.Id}.");
         }

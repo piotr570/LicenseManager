@@ -7,7 +7,7 @@ public class SingleLicenseAssignmentPolicy : ILicenseAssignmentPolicy
 {
     public void CanAssignUser(License license, User user)
     {
-        if (license.Assignments.Count > 0)
+        if (license.AssignmentIds.Count > 0)
         {
             throw new PolicyViolationException($"Assignment policy denied for user {user.Id}.");
         }

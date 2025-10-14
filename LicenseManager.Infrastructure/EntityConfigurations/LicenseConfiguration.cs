@@ -11,14 +11,18 @@ public class LicenseConfiguration : IEntityTypeConfiguration<License>
         entity.HasKey(l => l.Id);
         entity.Ignore(l => l.DomainEvents);
         entity.HasIndex(l => l.Key).IsUnique();
-
-        entity.HasMany(l => l.Assignments)
-            .WithOne(la => la.License)
-            .HasForeignKey(la => la.LicenseId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        entity.HasOne(l => l.Terms)
-            .WithOne(lt => lt.License)
-            .OnDelete(DeleteBehavior.Cascade);
+        entity.Property(l => l.Name).IsRequired();
+        entity.Property(l => l.Vendor).IsRequired();
+        entity.Property(l => l.IsActive).IsRequired();
+        entity.Property(l => l.UsageCount).IsRequired();
+        entity.Property(l => l.IsPaymentValid).IsRequired(false);
+        entity.Property(l => l.IsCancelled).IsRequired();
+        entity.Property(l => l.Department).HasConversion<string>().IsRequired(false);
+        
+        // If LicenseTerms is a value object, configure as owned entity:
+        entity.OwnsOne(l => l.Terms);
+        
+        entity.Ignore(l => l.AssignmentIds);
+        entity.Ignore(l => l.ReservationIds);
     }
 }

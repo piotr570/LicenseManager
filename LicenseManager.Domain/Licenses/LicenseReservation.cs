@@ -1,32 +1,25 @@
-using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Abstractions;
 using LicenseManager.SharedKernel.Common;
 
 namespace LicenseManager.Domain.Licenses;
 
-public class LicenseReservation : Entity
+public class LicenseReservation : Entity, IAggregateRoot
 {
     public Guid LicenseId { get; private set; }
-    public License License { get; private set; } = null!;
     public Guid UserId { get; private set; }
-    public User User { get; private set; } = null!;
-    public DateTime ReservedAt { get; init; }
-    public DateTime? ExpiresAt { get; init; }
+    public DateTime ReservedAt { get; private set; }
+    public DateTime? ExpiresAt { get; private set; }
 
-    // Private Constructor (For EF Core)
     private LicenseReservation() { }
-
-    // Factory Constructor for Internal Domain Use
-    internal LicenseReservation(License license, User user)
+    
+    public LicenseReservation(Guid licenseId, Guid userId, DateTime? expiresAt = null)
     {
-        License = license ?? throw new ArgumentNullException(nameof(license));
-        LicenseId = license.Id;
-
-        User = user ?? throw new ArgumentNullException(nameof(user));
-        UserId = user.Id;
-
+        if (licenseId == Guid.Empty) throw new ArgumentException("LicenseId cannot be empty");
+        if (userId == Guid.Empty) throw new ArgumentException("UserId cannot be empty");
+        LicenseId = licenseId;
+        UserId = userId;
         ReservedAt = SystemClock.Now;
-        ExpiresAt = ReservedAt.AddDays(7);
+        ExpiresAt = expiresAt ?? ReservedAt.AddDays(7);
     }
 
     public bool IsExpired(DateTime currentTime)

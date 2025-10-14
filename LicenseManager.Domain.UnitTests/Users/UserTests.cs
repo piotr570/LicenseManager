@@ -22,7 +22,6 @@ public class UserTests
         user.Email.Should().Be(email);
         user.Name.Should().Be(name);
         user.Department.Should().Be(department);
-        user.LicenseAssignments.Should().BeEmpty();
     }
 
     [Fact]

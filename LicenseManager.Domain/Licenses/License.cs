@@ -1,24 +1,20 @@
-using LicenseManager.Domain.Assignments;
 using LicenseManager.Domain.Assignments.Events;
 using LicenseManager.Domain.Licenses.BusinessRule;
 using LicenseManager.Domain.Licenses.Policies;
-using LicenseManager.Domain.Licenses.Enums;
 using LicenseManager.Domain.Licenses.Events;
 using LicenseManager.Domain.Services;
 using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Abstractions;
-using LicenseManager.SharedKernel.Common;
 using LicenseManager.SharedKernel.Exceptions;
 
 namespace LicenseManager.Domain.Licenses;
 
-public sealed class License : Entity
+public sealed class License : Entity, IAggregateRoot
 {
-    private List<Assignment> _assignments = [];
-    private List<LicenseReservation> _reservations = [];
-
-    public IReadOnlyCollection<Assignment> Assignments => _assignments.AsReadOnly();
-    public IReadOnlyCollection<LicenseReservation> Reservations => _reservations.AsReadOnly();
+    private readonly List<Guid> _assignmentIds = [];
+    private readonly List<Guid> _reservationIds = [];
+    public IReadOnlyCollection<Guid> AssignmentIds => _assignmentIds.AsReadOnly();
+    public IReadOnlyCollection<Guid> ReservationIds => _reservationIds.AsReadOnly();
 
     public string Key { get; private set; } = null!;
     public string Name { get; private set; } = null!;
@@ -50,111 +46,77 @@ public sealed class License : Entity
         return new License(id, key, vendor, name, terms);
     }
 
-    public void AssignUser(User user, ILicenseAssignmentPolicy policy, IEnumerable<IBusinessRule> rules, DateTime assignedDate)
+    public void AssignUser(Guid userId, ILicenseAssignmentPolicy policy, IEnumerable<IBusinessRule> rules, DateTime assignedDate)
     {
-        ValidateAssignment(user, rules);
-        policy.CanAssignUser(this, user);
+        ValidateAssignment(userId, rules);
+        policy.CanAssignUser(Id, userId);
 
-        if (_reservations.Any(r => r.UserId == user.Id))
-        {
-            _reservations = _reservations.Where(r => r.UserId != user.Id).ToList();
-        }
-        
-        _assignments.Add(new Assignment(this, user, assignedDate));
-        AddDomainEvent(new LicenseAssignedEvent(this, user));
+        // Remove reservation if exists
+        _reservationIds.Remove(userId);
+        // Add assignment
+        _assignmentIds.Add(userId);
+        AddDomainEvent(new LicenseAssignedEvent(Id, userId));
     }
 
-    public void Invoke(User user)
+    public void Invoke(Guid userId)
     {
-        ValidateInvocation(user);
-        
-        var assignment = _assignments.Single(x => x.UserId == user.Id);
-        assignment.UpdateLastActivity();
+        ValidateInvocation(userId);
         UsageCount++;
-        
-        AddDomainEvent(new LicenseInvokedEvent(this, user));
+        AddDomainEvent(new LicenseInvokedEvent(Id, userId));
     }
 
-    public void Deactivate()
-    {
-        IsActive = false;
-    }
+    public void Deactivate() => IsActive = false;
 
-    public void Reserve(User user)
+    public void Reserve(Guid userId)
     {
-        var rules = RulesEngine.GetReservationRules(this, user);
+        var rules = RulesEngine.GetReservationRules(this, userId);
         RulesEngine.EvaluateRules(rules);
-
-        _reservations = _reservations.Append(new LicenseReservation(this, user)).ToList();
-        
-        AddDomainEvent(new LicenseReservedEvent(this, user));
+        _reservationIds.Add(userId);
+        AddDomainEvent(new LicenseReservedEvent(Id, userId));
     }
 
-    public int CleanupExpiredReservations()
+    public int CleanupExpiredReservations(Func<Guid, bool> isExpired)
     {
-        var expiredReservations = _reservations.Where(r => r.IsExpired(SystemClock.Now)).ToList();
-        _reservations = _reservations.Except(expiredReservations).ToList();
-        return expiredReservations.Count;
+        var expired = _reservationIds.Where(isExpired).ToList();
+        foreach (var userId in expired)
+            _reservationIds.Remove(userId);
+        return expired.Count;
     }
 
-    public void CleanupNotUsedAssignments(DateTime currentTime)
+    public void CleanupNotUsedAssignments(Func<Guid, bool> isNotUsed)
     {
-        var notUsedAssignments = Assignments.Where(a => a.State == AssignmentState.NotUsed).ToList();
-
-        foreach (var assignment in notUsedAssignments)
+        var notUsed = _assignmentIds.Where(isNotUsed).ToList();
+        foreach (var userId in notUsed)
         {
-            _assignments.Remove(assignment);
-            AddDomainEvent(new AssignmentRemovedEvent(assignment.Id, Id));
+            _assignmentIds.Remove(userId);
+            AddDomainEvent(new AssignmentRemovedEvent(userId, Id));
         }
     }
 
-    private IEnumerable<IBusinessRule> GetInvocationRules(User user)
-        => RulesEngine.GetInvocationRules(this, user);
+    private IEnumerable<IBusinessRule> GetInvocationRules(Guid userId)
+        => RulesEngine.GetInvocationRules(this, userId);
 
     private static void ValidateLicenseCreation(string key, string vendor, string name, LicenseTerms terms)
     {
-        if (string.IsNullOrWhiteSpace(key))
-            throw new ArgumentException("License key is required.", nameof(key));
-
-        if (string.IsNullOrWhiteSpace(vendor))
-            throw new ArgumentException("Vendor name is required.", nameof(vendor));
-
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("License name is required.", nameof(name));
-
-        if (terms == null)
-            throw new ArgumentNullException(nameof(terms), "License terms must be provided.");
+        if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("License key is required.", nameof(key));
+        if (string.IsNullOrWhiteSpace(vendor)) throw new ArgumentException("Vendor name is required.", nameof(vendor));
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("License name is required.", nameof(name));
+        if (terms == null) throw new ArgumentNullException(nameof(terms), "License terms must be provided.");
     }
 
-    private void ValidateAssignment(User user, IEnumerable<IBusinessRule> rules)
+    private void ValidateAssignment(Guid userId, IEnumerable<IBusinessRule> rules)
     {
-        if (user == null)
-            throw new ArgumentNullException(nameof(user), "User is required for license assignment.");
-
+        if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId), "UserId is required for license assignment.");
         foreach (var rule in rules)
-        {
-            if (rule.IsBroken())
-                throw new BusinessRuleViolationException(rule);
-        }
+            if (rule.IsBroken()) throw new BusinessRuleViolationException(rule);
     }
 
-    private void ValidateInvocation(User user)
+    private void ValidateInvocation(Guid userId)
     {
-        if (user == null)
-        {
-            throw new ArgumentNullException(nameof(user), "User is required to invoke the license.");
-        }
-
-        if (!IsActive)
-        {
-            throw new LicenseNotActiveException("Cannot invoke an inactive license.");
-        }
-        
-        var rules = GetInvocationRules(user);
+        if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId), "UserId is required to invoke the license.");
+        if (!IsActive) throw new LicenseNotActiveException("Cannot invoke an inactive license.");
+        var rules = GetInvocationRules(userId);
         foreach (var rule in rules)
-        {
-            if (rule.IsBroken())
-                throw new BusinessRuleViolationException(rule);
-        }
+            if (rule.IsBroken()) throw new BusinessRuleViolationException(rule);
     }
 }

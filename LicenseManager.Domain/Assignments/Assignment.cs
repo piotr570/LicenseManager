@@ -1,6 +1,4 @@
-using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.Enums;
-using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Abstractions;
 using LicenseManager.SharedKernel.Common;
 
@@ -8,29 +6,21 @@ namespace LicenseManager.Domain.Assignments;
 
 public sealed class Assignment : Entity
 {
-    // EF Core only
-    private Assignment()
-    {
-    }
-
     public Guid LicenseId { get; private set; }
     public Guid UserId { get; private set; }
-
-    public License License { get; private set; } = null!;
-    public User User { get; private set; } = null!;
-
     public DateTime AssignedAt { get; init; }
     public DateTime? LastInvokedAt { get; private set; }
     public AssignmentState State { get; private set; }
 
-    public Assignment(License license, User user, DateTime assignedAt)
+    // For EF Core
+    private Assignment() { }
+
+    public Assignment(Guid licenseId, Guid userId, DateTime assignedAt)
     {
-        License = license ?? throw new ArgumentNullException(nameof(license));
-        User = user ?? throw new ArgumentNullException(nameof(user));
-
-        LicenseId = license.Id;
-        UserId = user.Id;
-
+        if (licenseId == Guid.Empty) throw new ArgumentNullException(nameof(licenseId));
+        if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
+        LicenseId = licenseId;
+        UserId = userId;
         AssignedAt = assignedAt;
         State = AssignmentState.Active;
     }

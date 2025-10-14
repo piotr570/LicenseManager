@@ -14,17 +14,9 @@ public class LicenseReservationConfiguration : IEntityTypeConfiguration<LicenseR
 
         entity.Property(lr => lr.ReservedAt).IsRequired();
         entity.Property(lr => lr.ExpiresAt).IsRequired(false);
+        entity.Property(lr => lr.LicenseId).IsRequired();
+        entity.Property(lr => lr.UserId).IsRequired();
 
         entity.HasIndex(lr => new { lr.LicenseId, lr.UserId }).IsUnique();
-
-        entity.HasOne(lr => lr.License)
-            .WithMany(l => l.Reservations)
-            .HasForeignKey(lr => lr.LicenseId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        entity.HasOne(lr => lr.User)
-            .WithMany() 
-            .HasForeignKey(lr => lr.UserId)
-            .OnDelete(DeleteBehavior.Restrict); 
     }
 }

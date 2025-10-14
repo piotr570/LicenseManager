@@ -1,6 +1,4 @@
-using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Licenses.BusinessRule;
-using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Abstractions;
 using LicenseManager.SharedKernel.Exceptions;
 
@@ -8,25 +6,25 @@ namespace LicenseManager.Domain.Services;
 
 public static class RulesEngine
 {
-    public static IEnumerable<IBusinessRule> GetReservationRules(License license, User user)
+    public static IEnumerable<IBusinessRule> GetReservationRules(Guid licenseId, Guid userId)
     {
         return new List<IBusinessRule>
         {
-            new LicenseMustBeActiveRule(license),
-            new UserMustNotAlreadyHaveLicenseRule(license, user),
-            new LicenseReservationLimitNotExceededRule(license)
+            new LicenseMustBeActiveRule(licenseId),
+            new UserMustNotAlreadyHaveLicenseRule(licenseId, userId),
+            new LicenseReservationLimitNotExceededRule(licenseId)
         };
     }
 
-    public static IEnumerable<IBusinessRule> GetInvocationRules(License license, User user)
+    public static IEnumerable<IBusinessRule> GetInvocationRules(Guid licenseId, Guid userId)
     {
         return new List<IBusinessRule>
         {
-            new LicenseMustBeActiveRule(license),
-            new LicenseCanNotBeCancelledRule(license),
-            new UsageLimitMustNotBeExceededRule(license),
-            new LicenseCanNotBeExpiredRule(license),
-            new UserMustBeAssignedToLicenseRule(license, user)
+            new LicenseMustBeActiveRule(licenseId),
+            new LicenseCanNotBeCancelledRule(licenseId),
+            new UsageLimitMustNotBeExceededRule(licenseId),
+            new LicenseCanNotBeExpiredRule(licenseId),
+            new UserMustBeAssignedToLicenseRule(licenseId, userId)
         };
     }
 

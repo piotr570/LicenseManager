@@ -2,5 +2,5 @@ namespace LicenseManager.Domain.Licenses.Abstractions;
 
 public interface ILicenseAssignmentCleanupDomainService
 {
-    void CleanupNotUsedAssignments(License license, DateTime currentTime);
+    void CleanupNotUsedAssignments(Guid licenseId, DateTime currentTime);
 }

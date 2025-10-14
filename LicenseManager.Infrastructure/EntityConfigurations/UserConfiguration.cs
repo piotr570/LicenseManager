@@ -10,17 +10,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         entity.HasKey(u => u.Id);
 
+        entity.Property(u => u.Email)
+            .IsRequired();
+
+        entity.Property(u => u.Name)
+            .IsRequired();
+
         entity.Property(u => u.Department)
             .HasConversion<string>();
-
-        entity.HasMany(u => u.LicenseAssignments)
-            .WithOne(la => la.User)
-            .HasForeignKey(la => la.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        entity.HasMany(u => u.LicenseReservations)
-            .WithOne(lr => lr.User)
-            .HasForeignKey(lr => lr.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }
