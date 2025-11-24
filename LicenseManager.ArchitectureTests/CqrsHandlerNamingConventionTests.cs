@@ -21,6 +21,6 @@ public class CqrsHandlerNamingConventionTests
             .ImplementInterface(typeof(IRequestHandler<,>))
             .GetTypes();
 
-        Assert.True(result.All(t => t.Name.EndsWith("QueryHandler") || t.Name.EndsWith("CommandHandler")));
+        Assert.True(result.All(x => x.Name.EndsWith("QueryHandler") || x.Name.EndsWith("CommandHandler")));
     }
 }

@@ -4,24 +4,22 @@ using LicenseManager.SharedKernel.Abstractions;
 using LicenseManager.Domain.Licenses;
 using LicenseManager.Domain.Users;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using LicenseReservation = LicenseManager.Domain.Reservations.LicenseReservation;
 
 namespace LicenseManager.Application.UseCases.Reservations.Handlers;
 
-public class GetAllReservationsQueryHandler(
-    IRepository<LicenseReservation> reservationRepository,
-    IRepository<License> licenseRepository,
-    IRepository<User> userRepository)
+public class GetAllReservationsQueryHandler(IReadDbContext db)
     : IRequestHandler<GetAllReservationsQuery, List<LicenseReservationDto>>
 {
     public async Task<List<LicenseReservationDto>> Handle(GetAllReservationsQuery request, CancellationToken cancellationToken)
     {
-        var reservations = await reservationRepository.GetAllAsync(cancellationToken);
-        var licenses = await licenseRepository.GetAllAsync(cancellationToken);
-        var users = await userRepository.GetAllAsync(cancellationToken);
+        var reservations = await db.Set<LicenseReservation>().ToListAsync(cancellationToken);
+        var licenses = await db.Set<License>().ToListAsync(cancellationToken);
+        var users = await db.Set<User>().ToListAsync(cancellationToken);
 
-        var licenseDict = licenses.ToDictionary(l => l.Id);
-        var userDict = users.ToDictionary(u => u.Id);
+        var licenseDict = licenses.ToDictionary(x => x.Id);
+        var userDict = users.ToDictionary(x => x.Id);
 
         var result = reservations.Select(r => new LicenseReservationDto
         {
@@ -38,5 +36,3 @@ public class GetAllReservationsQueryHandler(
         return result;
     }
 }
-
-

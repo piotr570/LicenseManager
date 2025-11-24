@@ -1,5 +1,5 @@
 using LicenseManager.Application.UseCases.Licenses.Commands;
-using LicenseManager.Application.UseCases.Licenses.Models;
+using LicenseManager.Application.UseCases.Licenses.Dtos;
 using LicenseManager.Application.UseCases.Licenses.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +49,7 @@ public static class LicenseEndpoints
 
     private static async Task<IResult> AddLicense(
         [FromServices] IMediator mediator,
-        [FromBody] AddLicenseCommand command)
+        [FromBody] CreateLicenseCommand command)
     {
         var licenseId = await mediator.Send(command);
         return Results.Created($"/license/{licenseId}", licenseId);

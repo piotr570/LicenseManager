@@ -6,6 +6,6 @@ public class LicenseAssignmentCleanupDomainService : ILicenseAssignmentCleanupDo
 {
     public void CleanupNotUsedAssignments(Guid licenseId, DateTime currentTime)
     {
-        license.CleanupNotUsedAssignments(currentTime);
+        // license.CleanupNotUsedAssignments(currentTime);
     }
 }

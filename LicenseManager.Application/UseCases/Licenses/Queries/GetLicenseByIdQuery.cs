@@ -1,4 +1,4 @@
-using LicenseManager.Application.UseCases.Licenses.Models;
+using LicenseManager.Application.UseCases.Licenses.Dtos;
 using MediatR;
 
 namespace LicenseManager.Application.UseCases.Licenses.Queries;

@@ -1,6 +1,8 @@
-namespace LicenseManager.Domain.Licenses.Policies;
+using LicenseManager.Domain.Users;
+
+namespace LicenseManager.Domain.Licenses.Rules;
 
 public interface ILicenseAssignmentPolicy
 {
-    void CanAssignUser(Guid licenseId, Guid userId);
+    void CanAssignUser(int assignmentCount, int? maxUsers, DepartmentType? licenseDepartment = null, DepartmentType? userDepartment = null);
 }

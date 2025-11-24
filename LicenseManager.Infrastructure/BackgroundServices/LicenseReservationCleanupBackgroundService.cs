@@ -1,5 +1,5 @@
-using LicenseManager.Application.HostedServices.Interfaces;
-using LicenseManager.Infrastructure.Configuration;
+using LicenseManager.Application.Abstraction;
+using LicenseManager.Infrastructure.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -9,15 +9,20 @@ namespace LicenseManager.Infrastructure.BackgroundServices;
 
 public class LicenseReservationCleanupBackgroundService(
     IServiceScopeFactory serviceScopeFactory,
-    IOptions<LicenseReservationCleanupSettings> options,
+    IOptions<LicenseReservationCleanupOptions> options,
     ILogger<LicenseReservationCleanupBackgroundService> logger)
     : BackgroundService
 {
-    private readonly LicenseReservationCleanupSettings _settings = options.Value;
+    private readonly LicenseReservationCleanupOptions _options = options.Value;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        logger.LogInformation("License Reservation Cleanup Background Service started.");
+        logger.LogInformation(
+            "License Reservation Cleanup Background Service started. Cleanup frequency: {Frequency} hours",
+            _options.CleanupFrequencyInHours);
+
+        // Initial delay before first execution (prevents startup load)
+        await Task.Delay(TimeSpan.FromMinutes(2), stoppingToken);
 
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -25,13 +30,25 @@ public class LicenseReservationCleanupBackgroundService(
             {
                 await PerformCleanupAsync(stoppingToken);
             }
+            catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+            {
+                logger.LogInformation("License Reservation Cleanup Background Service is stopping gracefully.");
+                break;
+            }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred during License Reservation Cleanup.");
+                logger.LogError(ex, "Unhandled error in License Reservation Cleanup Background Service. Will retry on next scheduled run.");
             }
 
-            // Delay for configured interval (1 hour)
-            await Task.Delay(TimeSpan.FromHours(_settings.CleanupFrequencyInDays), stoppingToken);
+            try
+            {
+                await Task.Delay(TimeSpan.FromHours(_options.CleanupFrequencyInHours), stoppingToken);
+            }
+            catch (OperationCanceledException)
+            {
+                logger.LogInformation("License Reservation Cleanup Background Service stopped during delay.");
+                break;
+            }
         }
 
         logger.LogInformation("License Reservation Cleanup Background Service stopped.");
@@ -39,9 +56,17 @@ public class LicenseReservationCleanupBackgroundService(
 
     private async Task PerformCleanupAsync(CancellationToken cancellationToken)
     {
-        using var scope = serviceScopeFactory.CreateScope();
-        var cleanupService = scope.ServiceProvider.GetRequiredService<ILicenseReservationCleanupService>();
+        logger.LogDebug("Creating service scope for license reservation cleanup.");
         
+        await using var scope = serviceScopeFactory.CreateAsyncScope();
+        var cleanupService = scope.ServiceProvider.GetRequiredService<ILicenseReservationCleanupService>();
+
         await cleanupService.CleanupExpiredReservationsAsync(cancellationToken);
+    }
+
+    public override async Task StopAsync(CancellationToken cancellationToken)
+    {
+        logger.LogInformation("License Reservation Cleanup Background Service is stopping...");
+        await base.StopAsync(cancellationToken);
     }
 }

@@ -1,10 +1,11 @@
-using LicenseManager.Application;
-using LicenseManager.Application.Middlewares;
-using LicenseManager.Controllers;
-using LicenseManager.Domain;
-using LicenseManager.Infrastructure;
-using LicenseManager.Notification.Infrastructure;
 using Serilog;
+using LicenseManager.Licenses;
+using LicenseManager.Licenses.API;
+using LicenseManager.Middlewares;
+using LicenseManager.Users;
+using LicenseManager.Users.API;
+using LicenseManager.Notification.Infrastructure;
+using LicenseManager.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,16 +15,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDomainLayer();
-builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructureLayer(builder.Configuration);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                       builder.Configuration["DatabaseConfiguration:ConnectionString"]!;
 
-// Module registrations
+// Register modular modules
+builder.Services.AddLicensesModule(connectionString);
+builder.Services.AddUsersModule(connectionString);
+builder.Services.AddObservabilityModule();
 builder.Services.AddNotificationModule();
 
 builder.Services.AddCors(options =>
 {
-    // this defines a CORS policy called "default"
     options.AddPolicy("default", policy =>
     {
         policy.WithOrigins("*", "http://localhost:62212")
@@ -45,8 +47,11 @@ app.UseExceptionHandling();
 app.UseRequestLogging();
 
 app.MapControllers();
-app.MapLicenseEndpoints();
-app.MapUserEndpoints();
+
+// Map modular module endpoints
+app.MapLicensesModule();
+app.MapUsersModule();
+app.MapObservabilityModuleEndpoints();
 app.MapNotificationModuleEndpoints();
 
 app.Run();

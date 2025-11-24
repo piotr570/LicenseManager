@@ -1,21 +1,20 @@
-using LicenseManager.Application.Common.Exceptions;
 using LicenseManager.Application.UseCases.Licenses.Commands;
+using LicenseManager.Domain.Assignments;
 using LicenseManager.Domain.Licenses;
-using LicenseManager.Domain.Licenses.Abstractions;
-using LicenseManager.Domain.Licenses.Factories.Assignment;
 using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Abstractions;
 using LicenseManager.SharedKernel.Common;
+using LicenseManager.SharedKernel.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace LicenseManager.Application.UseCases.Licenses.Handlers;
 
 public class AssignLicenseCommandHandler(
-    ILicenseBusinessRuleProvider ruleProvider,
     ILicenseAssignmentPolicyFactory policyFactory,
-    IRepository<License> licenseRepository,
-    IRepository<User> userRepository,
+    IReadDbContext db,
+    IRepository<Assignment> repository,
     IUnitOfWork unitOfWork,
     ILogger<AssignLicenseCommandHandler> logger)
     : IRequestHandler<AssignLicenseCommand>
@@ -24,23 +23,35 @@ public class AssignLicenseCommandHandler(
     {
         logger.LogInformation("Assigning a license with Id: {0} to Id: {1}.", command.LicenseId, command.UserId);
 
-        var license = await licenseRepository.GetByIdIncludingAsync(command.LicenseId, 
-                          x => x.Terms,
-                          x => x.Reservations,
-                          x => x.Assignments)
-                      ?? throw new NotFoundException(nameof(License), command.LicenseId);
+        // Load license aggregate including assignments and user
+        var license = await db.Set<License>()
+            .Include(x => x.Assignments)
+            .FirstOrDefaultAsync(x => x.Id == command.LicenseId, cancellationToken);
 
-        var user = await userRepository.GetByIdIncludingAsync(command.UserId, 
-                       x => x.LicenseAssignments,
-                       x => x.LicenseReservations)
-                   ?? throw new NotFoundException(nameof(User), command.UserId);
-        
+        var user = await db.Set<User>().FirstOrDefaultAsync(x => x.Id == command.UserId, cancellationToken);
+
+        if (license == null || user == null)
+            throw new NotFoundException("Either License or User was not found.");
+
+        // Ensure assignment does not already exist (check the child collection)
+        var assignmentExists = license.Assignments.Any(x => x.UserId == command.UserId);
+
+        if (assignmentExists)
+            throw new ConflictException("The License is already assigned to the User.");
+
+        // Use policy to validate assignment according to license terms
         var policy = policyFactory.GetPolicy(license.Terms.Type);
-        var rules = ruleProvider.GetRules(license, user);
-        
-        license.AssignUser(user, policy, rules, SystemClock.Now);
-        
+        var currentAssignmentCount = license.Assignments.Count;
+        policy.CanAssignUser(currentAssignmentCount, license.Terms.MaxUsers, license.Department, user.Department);
+
+        // Update aggregate (this will create and add Assignment as child)
+        var now = SystemClock.Now;
+        var assignment = new Assignment(license.Id, user.Id, now);
+        license.AssignUser(assignment);
+
+        await repository.AddAsync(assignment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
         logger.LogInformation("Successfully assigned a license with Id: {0} to Id: {1}.", command.LicenseId, command.UserId);
     }
 }

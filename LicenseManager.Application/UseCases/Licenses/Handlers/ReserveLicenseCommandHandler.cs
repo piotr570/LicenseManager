@@ -1,16 +1,21 @@
-using LicenseManager.Application.Common.Exceptions;
 using LicenseManager.Application.UseCases.Licenses.Commands;
 using LicenseManager.Domain.Licenses;
+using LicenseManager.Domain.Reservations;
+using LicenseManager.Domain.Reservations.Services;
 using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Abstractions;
+using LicenseManager.SharedKernel.Common;
+using LicenseManager.SharedKernel.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace LicenseManager.Application.UseCases.Licenses.Handlers;
 
 public class ReserveLicenseCommandHandler(
-    IRepository<License> licenseRepository,
-    IRepository<User> userRepository,
+    IRepository<LicenseReservation> licenseReservationRepository,
+    IReservationDomainService reservationDomainService,
+    IReadDbContext db,
     IUnitOfWork unitOfWork,
     ILogger<DeleteLicenseCommandHandler> logger) : IRequestHandler<ReserveLicenseCommand>
 {
@@ -18,19 +23,15 @@ public class ReserveLicenseCommandHandler(
     {
         logger.LogInformation("Reserving a license with Id: {0} for user with Id: {1}", command.LicenseId, command.UserId);
 
-        var license = await licenseRepository.GetByIdIncludingAsync(command.LicenseId, 
-                          x => x.Terms,
-                          x => x.Reservations,
-                          x => x.Assignments)
-                      ?? throw new NotFoundException(nameof(License), command.LicenseId);
+        var license = await db.GetEntityOrThrowAsync<License>(command.LicenseId, cancellationToken);
+        var user = await db.GetEntityOrThrowAsync<User>(command.UserId, cancellationToken);
+        
+        reservationDomainService.CheckReservationRules(license, user.Id);
+        
+        var now = SystemClock.Now;
+        var licenseReservation = new LicenseReservation(license.Id, user.Id, now, now.AddDays(7));
 
-        var user = await userRepository.GetByIdIncludingAsync(command.UserId, 
-                       x => x.LicenseAssignments,
-                       x => x.LicenseReservations)
-                   ?? throw new NotFoundException(nameof(User), command.UserId);
-
-        license.Reserve(user);
-
+        await licenseReservationRepository.AddAsync(licenseReservation);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         logger.LogInformation("Successfully reserved a license with Id: {0} for user with Id: {1}", command.LicenseId, command.UserId);
     }

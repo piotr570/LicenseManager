@@ -16,7 +16,6 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.2" />
         <PackageReference Include="Serilog" Version="4.2.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
@@ -39,6 +38,9 @@
       <ProjectReference Include="..\LicenseManager.Application\LicenseManager.Application.csproj" />
       <ProjectReference Include="..\LicenseManager.Infrastructure\LicenseManager.Infrastructure.csproj" />
       <ProjectReference Include="..\LicenseManager.Notification\LicenseManager.Notification.csproj" />
+      <ProjectReference Include="..\LicenseManager.Licenses\LicenseManager.Licenses.csproj" />
+      <ProjectReference Include="..\LicenseManager.Users\LicenseManager.Users.csproj" />
+      <ProjectReference Include="..\LicenseManager.Observability\LicenseManager.Observability.csproj" />
     </ItemGroup>
 
 </Project>

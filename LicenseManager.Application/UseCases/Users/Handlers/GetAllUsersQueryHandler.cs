@@ -3,18 +3,19 @@ using LicenseManager.Application.UseCases.Users.Queries;
 using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Abstractions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace LicenseManager.Application.UseCases.Users.Handlers;
 
-public class GetAllUsersQueryHandler(IRepository<User> repository,
+public class GetAllUsersQueryHandler(IReadDbContext db,
     ILogger<GetAllUsersQueryHandler> logger)
     : IRequestHandler<GetAllUsersQuery, IEnumerable<UserDto>>
 {
     public async Task<IEnumerable<UserDto>> Handle(GetAllUsersQuery query, CancellationToken cancellationToken)
     {
         logger.LogInformation($"Getting all users.");
-        var users = await repository.GetAllAsync(cancellationToken);
+        var users = await db.Set<User>().ToListAsync(cancellationToken);
         var mappedUsers = users.Select(user => new UserDto(user));
         logger.LogInformation($"Returning fetched users.");
         return mappedUsers;

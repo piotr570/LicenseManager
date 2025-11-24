@@ -1,5 +1,7 @@
 using System.Reflection;
-using LicenseManager.Domain.Licenses.Factories.Assignment;
+using LicenseManager.Application.Abstraction;
+using LicenseManager.Application.HostedServices;
+using LicenseManager.Domain.Assignments;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LicenseManager.Application;
@@ -12,6 +14,9 @@ public static class ApplicationRegistration
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(ApplicationAssembly));
         services.AddSingleton<ILicenseAssignmentPolicyFactory, LicenseAssignmentPolicyFactory>();
+
+        services.AddScoped<ILicenseAssignmentCleanupService, LicenseAssignmentCleanupService>();
+        services.AddScoped<ILicenseReservationCleanupService, LicenseReservationCleanupService>();
 
         return services;
     }

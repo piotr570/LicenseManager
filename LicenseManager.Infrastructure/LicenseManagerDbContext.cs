@@ -1,6 +1,7 @@
 using System.Reflection;
 using LicenseManager.Domain.Assignments;
 using LicenseManager.Domain.Licenses;
+using LicenseManager.Domain.Reservations;
 using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Events;
 using Microsoft.EntityFrameworkCore;

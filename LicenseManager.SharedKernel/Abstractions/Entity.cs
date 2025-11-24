@@ -23,7 +23,7 @@ public abstract class Entity : IEquatable<Entity>
         _domainEvents.Clear();
     }
     
-    public void CheckBusinessRules(IEnumerable<IBusinessRule> rules)
+    protected void CheckBusinessRules(IEnumerable<IBusinessRule> rules)
     {
         var brokenRules = rules.Where(rule => rule.IsBroken()).ToList();
 

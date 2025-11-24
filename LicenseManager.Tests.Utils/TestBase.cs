@@ -30,7 +30,6 @@ public abstract class TestBase
         var fixture = new Fixture();
 
         var terms = new LicenseTerms(
-            licenseId: Guid.NewGuid(),
             type: LicenseType.Server,
             mode: LicenseMode.TimeBased,
             maxUsers: 1,
@@ -40,6 +39,6 @@ public abstract class TestBase
             usageLimit: null
         );
 
-        return License.Create(Guid.NewGuid(), fixture.Create<string>(), fixture.Create<string>(), fixture.Create<string>(), terms);
+        return new License(fixture.Create<string>(), fixture.Create<string>(), fixture.Create<string>(), terms);
     }
 }

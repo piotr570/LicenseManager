@@ -9,12 +9,13 @@
     <ItemGroup>
       <ProjectReference Include="..\LicenseManager.Domain\LicenseManager.Domain.csproj" />
       <ProjectReference Include="..\LicenseManager.SharedKernel\LicenseManager.SharedKernel.csproj" />
+      <ProjectReference Include="..\LicenseManager.Observability\LicenseManager.Observability.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="MediatR" Version="12.4.1" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.4" />
     </ItemGroup>
     
     

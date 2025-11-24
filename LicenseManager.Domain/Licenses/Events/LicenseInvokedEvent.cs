@@ -1,10 +1,9 @@
-using LicenseManager.Domain.Users;
 using LicenseManager.SharedKernel.Events;
 
 namespace LicenseManager.Domain.Licenses.Events;
 
-public class LicenseInvokedEvent(License license, User user) : DomainEvent
+public class LicenseInvokedEvent(Guid licenseId, Guid userId) : DomainEvent
 {
-    public License License { get; init; } = license;
-    public User User { get; init; } = user;
+    public Guid LicenseId { get; } = licenseId;
+    public Guid UserId { get; } = userId;
 }

@@ -1,16 +1,16 @@
 using LicenseManager.Domain.Licenses.BusinessRule;
 using LicenseManager.Domain.Users;
 
-namespace LicenseManager.Domain.Licenses.Policies;
+namespace LicenseManager.Domain.Licenses.Rules;
 
 public class TeamLicenseAssignmentPolicy : ILicenseAssignmentPolicy
 {
-    public void CanAssignUser(License license, User user)
+    public void CanAssignUser(int assignmentCount, int? maxUsers, DepartmentType? licenseDepartment, DepartmentType? userDepartment)
     {
-        if (!((license.Department == null || user.Department == license.Department) 
-            && license.AssignmentIds.Count < license.Terms.MaxUsers))
+        if ((licenseDepartment != null && userDepartment != licenseDepartment) 
+            || assignmentCount >= maxUsers)
         {
-            throw new PolicyViolationException($"Assignment policy denied for user {user.Id}.");
+            throw new PolicyViolationException("Team license assignment policy denied.");
         }
     }
 }

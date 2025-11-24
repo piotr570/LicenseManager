@@ -78,7 +78,7 @@
 //         _policyMock.Setup(p => p.CanAssignUser(_licenseId, _userId));
 //         _policyFactoryMock.Setup(f => f.GetPolicy(_licenseId.Terms.Type)).Returns(_policyMock.Object);
 //
-//         _businessRuleMock.Setup(r => r.IsBroken()).Returns(true);
+//         _businessRuleMock.Setup(x => x.IsBroken()).Returns(true);
 //         var rules = new List<IBusinessRule> { _businessRuleMock.Object };
 //
 //         // Act & Assert
@@ -126,7 +126,7 @@
 //         license.Reserve(user);
 //
 //         // Assert
-//         var reservation = license.Reservations.SingleOrDefault(r => r.User.Equals(user));
+//         var reservation = license.Reservations.SingleOrDefault(x => x.User.Equals(user));
 //         reservation.Should().NotBeNull();
 //         license.DomainEvents.Should().ContainSingle(e => e is LicenseReservedEvent);
 //     }

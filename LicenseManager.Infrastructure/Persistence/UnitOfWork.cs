@@ -13,8 +13,8 @@ public class UnitOfWork<TContext>(TContext dbContext,
     {
         var entitiesWithEvents = dbContext.ChangeTracker
             .Entries<Entity>() 
-            .Where(e => e.Entity.DomainEvents.Any())
-            .Select(e => e.Entity)
+            .Where(x => x.Entity.DomainEvents.Any())
+            .Select(x => x.Entity)
             .ToList();
 
         var result = await dbContext.SaveChangesAsync(cancellationToken);

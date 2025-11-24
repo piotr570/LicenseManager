@@ -9,8 +9,8 @@ public class User : Entity, IAggregateRoot
     public string Name { get; private set; }
     public DepartmentType Department { get; private set; }
 
-    // For EF Core
     private User() { }
+    
     public User(string email, string name, DepartmentType department)
     {
         CheckBusinessRules([

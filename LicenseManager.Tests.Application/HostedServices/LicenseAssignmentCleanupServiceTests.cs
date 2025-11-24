@@ -53,7 +53,7 @@
 //         }
 //
 //         _repositoryMock
-//             .Setup(r => r.GetAllIncludingAsync(
+//             .Setup(x => x.GetAllIncludingAsync(
 //                 It.IsAny<Expression<Func<License, bool>>>(),
 //                 It.IsAny<Func<IQueryable<License>, IQueryable<License>>[]>()))
 //             .ReturnsAsync(licenses);
@@ -63,9 +63,9 @@
 //
 //         // Assert
 //         Assert.All(licenses, l => Assert.Empty(l.Assignments));
-//         _repositoryMock.Verify(r => r.GetAllIncludingAsync(It.IsAny<Expression<Func<License, bool>>>(),
+//         _repositoryMock.Verify(x => x.GetAllIncludingAsync(It.IsAny<Expression<Func<License, bool>>>(),
 //             It.IsAny<Func<IQueryable<License>, IQueryable<License>>[]>()), Times.Once);
-//         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+//         _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
 //         _loggerMock.VerifyLogContains(LogLevel.Information, "Running Not Used License Assignments Cleanup Service", Times.Once());
 //         _loggerMock.VerifyLogContains(LogLevel.Information, $"Cleaned up unused assignments for {licenses[0].Id} license.", Times.Once());
 //         _loggerMock.VerifyLogContains(LogLevel.Information, $"Cleaned up unused assignments for {licenses[1].Id} license.", Times.Once());
@@ -76,7 +76,7 @@
 //     {
 //         // Arrange
 //         _repositoryMock
-//             .Setup(r => r.GetAllIncludingAsync(
+//             .Setup(x => x.GetAllIncludingAsync(
 //                 It.IsAny<Expression<Func<License, bool>>>(),
 //                 It.IsAny<Func<IQueryable<License>, IQueryable<License>>[]>()))
 //             .ReturnsAsync(new List<License>()); 
@@ -85,7 +85,7 @@
 //         await _cleanupService.CleanupNotUsedAssignmentsAsync(CancellationToken.None);
 //     
 //         // Assert
-//         _repositoryMock.Verify(r => r.Update(It.IsAny<License>()), Times.Never);
-//         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never); 
+//         _repositoryMock.Verify(x => x.Update(It.IsAny<License>()), Times.Never);
+//         _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never); 
 //     }
 // }
