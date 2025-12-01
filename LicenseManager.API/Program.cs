@@ -11,14 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureLogging(builder);
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        builder.Configuration["DatabaseConfiguration:ConnectionString"]!;
 
-// Register modular modules
 builder.Services.AddLicensesModule(connectionString);
 builder.Services.AddUsersModule(connectionString);
 builder.Services.AddObservabilityModule();
@@ -37,18 +35,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseExceptionHandling();
 app.UseRequestLogging();
 
-app.MapControllers();
-
-// Map modular module endpoints
 app.MapLicensesModule();
 app.MapUsersModule();
 app.MapObservabilityModuleEndpoints();

@@ -35,11 +35,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LicenseManager.Application\LicenseManager.Application.csproj" />
-      <ProjectReference Include="..\LicenseManager.Infrastructure\LicenseManager.Infrastructure.csproj" />
-      <ProjectReference Include="..\LicenseManager.Notification\LicenseManager.Notification.csproj" />
       <ProjectReference Include="..\LicenseManager.Licenses\LicenseManager.Licenses.csproj" />
       <ProjectReference Include="..\LicenseManager.Users\LicenseManager.Users.csproj" />
+      <ProjectReference Include="..\LicenseManager.Notification\LicenseManager.Notification.csproj" />
       <ProjectReference Include="..\LicenseManager.Observability\LicenseManager.Observability.csproj" />
     </ItemGroup>
 

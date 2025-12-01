@@ -35,4 +35,3 @@ public record AssignmentDto(
     DateTime AssignedAt,
     DateTime? LastInvokedAt,
     string State);
-

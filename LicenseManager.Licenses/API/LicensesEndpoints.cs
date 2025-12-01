@@ -146,13 +146,3 @@ internal static class LicensesEndpoints
         return Results.Ok(result);
     }
 }
-
-public static class LicensesModuleEndpointExtensions
-{
-    public static IEndpointRouteBuilder MapLicensesModule(this IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapLicensesModuleEndpoints();
-        return endpoints;
-    }
-}
-

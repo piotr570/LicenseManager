@@ -1,5 +1,4 @@
-﻿version: '3.8'
-services:
+﻿services:
   licensemanagerdb:
     image: postgres:15
     container_name: licensemanager_db
@@ -14,7 +13,9 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "5432:5432"  # Expose the database
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
     networks:
       - app-network
 
@@ -24,29 +25,40 @@ services:
     build:
       context: .
       dockerfile: LicenseManager.API/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
     ports:
-      - "5666:5666"  
+      - "5666:5666"
     environment:
       - ASPNETCORE_URLS=http://+:5666
-      - ASPNETCORE_ENVIRONMENT=Development
-      - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341  
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341
       - DatabaseConfiguration__ConnectionString=Server=licensemanager_db;Port=5432;Database=master;User Id=admin;Password=Admin123!;
       - DB_HOST=licensemanager_db
       - DB_PORT=5432
       - DB_USER=admin
       - DB_NAME=master
     depends_on:
-      - seq
-      - licensemanagerdb
+      licensemanagerdb:
+        condition: service_healthy
+      seq:
+        condition: service_started
     networks:
       - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5666/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   adminer:
-    image: adminer
+    image: adminer:latest
     container_name: adminer
     restart: always
     ports:
-      - "8095:8080"  # Expose Adminer GUI on port 8095
+      - "8095:8080"
     networks:
       - app-network
 
@@ -55,17 +67,21 @@ services:
     container_name: seq_server
     restart: always
     ports:
-      - "5341:5341"  # Seq UI and ingestion port
-      - "8091:80"    # Optional: Expose Seq's HTTP API
+      - "5341:5341"
+      - "8091:80"
     environment:
-      - ACCEPT_EULA=Y  # Accept Seq EULA
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORD=Admin123!
     volumes:
-      - seq_data:/data  # Persistent data storage for logs
+      - seq_data:/data
     networks:
       - app-network
 
 volumes:
-  seq_data:  # Shared storage for Seq
+  db_data:
+    driver: local
+  seq_data:
+    driver: local
 
 networks:
   app-network:

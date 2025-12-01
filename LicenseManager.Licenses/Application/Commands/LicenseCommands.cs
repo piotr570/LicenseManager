@@ -28,4 +28,3 @@ public record DeleteLicenseCommand(
 public record RemoveAssignmentCommand(
     Guid AssignmentId,
     Guid LicenseId) : IRequest;
-

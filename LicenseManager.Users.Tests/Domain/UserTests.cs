@@ -1,4 +1,5 @@
 using LicenseManager.Users.Domain.Aggregates;
+using Xunit;
 
 namespace LicenseManager.Users.Tests.Domain;
 

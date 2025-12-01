@@ -8,6 +8,7 @@ namespace LicenseManager.SharedKernel.Abstractions;
 public abstract class Entity : IEquatable<Entity>
 {
     private readonly List<IDomainEvent> _domainEvents = [];
+    
     public ReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
     public Guid Id { get; init; }
     public DateTime CreatedAt { get; init; } = SystemClock.Now;

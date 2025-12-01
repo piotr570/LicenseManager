@@ -11,10 +11,23 @@ done
 
 echo "Database is ready. Applying migrations"
 
-cd /app/LicenseManager.API
-export ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
-dotnet ef database update --no-build --project LicenseManager.API.csproj --startup-project LicenseManager.API.csproj --configuration Release
-
-echo "EF migration finished, starting API"
 cd /app
+
+# Apply migrations for Licenses module
+echo "Applying migrations for Licenses module..."
+dotnet ef database update \
+  --project /app/LicenseManager.Licenses/LicenseManager.Licenses.csproj \
+  --startup-project /app/LicenseManager.API/LicenseManager.API.csproj \
+  --context LicensesDbContext \
+  --configuration Release
+
+# Apply migrations for Users module
+echo "Applying migrations for Users module..."
+dotnet ef database update \
+  --project /app/LicenseManager.Users/LicenseManager.Users.csproj \
+  --startup-project /app/LicenseManager.API/LicenseManager.API.csproj \
+  --context UsersDbContext \
+  --configuration Release
+
+echo "All migrations finished, starting API"
 exec dotnet LicenseManager.API.dll

@@ -13,7 +13,6 @@ public sealed class LicensesDbContext(DbContextOptions<LicensesDbContext> option
     {
         base.OnModelCreating(modelBuilder);
 
-        // License configuration
         modelBuilder.Entity<License>(entity =>
         {
             entity.HasKey(x => x.Id);
@@ -24,7 +23,6 @@ public sealed class LicensesDbContext(DbContextOptions<LicensesDbContext> option
             entity.Property(x => x.UsageCount).IsRequired();
             entity.Property(x => x.IsCancelled).IsRequired();
 
-            // Value object mapping
             entity.OwnsOne(x => x.Terms, terms =>
             {
                 terms.Property(x => x.Type).HasColumnName("Terms_Type");
@@ -36,7 +34,6 @@ public sealed class LicensesDbContext(DbContextOptions<LicensesDbContext> option
                 terms.Property(x => x.RenewalDate).HasColumnName("Terms_RenewalDate");
             });
 
-            // Relationships
             entity.HasMany(x => x.Assignments)
                 .WithOne()
                 .HasForeignKey(a => a.LicenseId)
@@ -45,7 +42,6 @@ public sealed class LicensesDbContext(DbContextOptions<LicensesDbContext> option
             entity.HasIndex(x => x.Key).IsUnique();
         });
 
-        // Assignment configuration
         modelBuilder.Entity<Assignment>(entity =>
         {
             entity.HasKey(x => x.Id);
