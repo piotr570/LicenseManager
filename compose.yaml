@@ -53,15 +53,6 @@
       retries: 3
       start_period: 40s
 
-  adminer:
-    image: adminer:latest
-    container_name: adminer
-    restart: always
-    ports:
-      - "8095:8080"
-    networks:
-      - app-network
-
   seq:
     image: datalust/seq:latest
     container_name: seq_server
