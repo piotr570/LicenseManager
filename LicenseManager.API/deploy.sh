@@ -11,23 +11,21 @@ done
 
 echo "Database is ready. Applying migrations"
 
-cd /app
+cd /app/LicenseManager.API
 
-# Apply migrations for Licenses module
+# Apply migrations using already built DLLs
 echo "Applying migrations for Licenses module..."
 dotnet ef database update \
-  --project /app/LicenseManager.Licenses/LicenseManager.Licenses.csproj \
-  --startup-project /app/LicenseManager.API/LicenseManager.API.csproj \
   --context LicensesDbContext \
+  --no-build \
   --configuration Release
 
-# Apply migrations for Users module
 echo "Applying migrations for Users module..."
 dotnet ef database update \
-  --project /app/LicenseManager.Users/LicenseManager.Users.csproj \
-  --startup-project /app/LicenseManager.API/LicenseManager.API.csproj \
   --context UsersDbContext \
+  --no-build \
   --configuration Release
 
+cd /app
 echo "All migrations finished, starting API"
 exec dotnet LicenseManager.API.dll
